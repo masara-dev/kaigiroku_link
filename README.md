@@ -1,6 +1,13 @@
 # 市区町村議会会議録検索リンク
 
-[localgovjp](https://github.com/code4fukui/localgovjp) の自治体一覧をもとに、都道府県別に `cities_all.xml` に記載した会議録検索などへの URL を一覧する静的サイトです。`<url>` が空の市区町村はリンクを出さず、`<result>` が `ok` の件数を参考表示します。
+## 概要
+全国の市区町村議会「会議録検索ページ」を一覧化した静的サイトです。
+各自治体ごとに、会議録検索などの公式URLを整理し、都道府県別に整理しています。
+「自治体ごとの会議録ページを横断的に探したい」
+といった用途を想定しています。
+
+**リンク先は取得作業中です。まだ全ての自治体に対応できていません。**
+サイト上部にある「対応自治体数…XX/XX（X%）」は、cities_all.xmlの`<result>` が `ok` の件数（=URLリンクがある件数）を表示しています。
 
 ## このリポジトリに含まれるもの
 
@@ -9,14 +16,12 @@
 | `index.html` | ページ本体 |
 | `style.css` | スタイル |
 | `script.js` | `cities_all.xml` を読み込み、リストを描画 |
-| `cities_all.xml` | 都道府県 → `<municipality>`（`ja` / `en` / `url` / `result`） |
+| `cities_all.xml` | 都道府県別の各自治体の読みとリンク先URLをまとめたもの → `<municipality>`（`ja` / `en` / `url` / `result`） |
 | `favicon.svg` | ファビコン |
-| `checks/*.mjs` | 会議録 URL 検査用スクリプト（`node checks/check_ssp.mjs` など。親の `cities_all.xml` を読む） |
+| `checks/*.mjs` | URLチェック用スクリプト（`node checks/check_ssp.mjs` など。親の `cities_all.xml` を読む） |
 | `results/` | 上記チェックの出力 XML（`check_*_YYYYMMDD_HHmm.xml`） |
 
 `merge_xml.mjs`（直下）は `results/check_*.xml` を `cities_all.xml` にマージする。例: `node merge_xml.mjs results/check_ssp_xxx.xml`
-
-CSV や XML 再生成用のその他スクリプトは **Git には含めていません**（ローカル開発用に別管理してください）。
 
 ## ローカルでの表示
 
@@ -33,3 +38,11 @@ npx --yes serve .
 ## ライセンス
 
 本リポジトリのオリジナル部分のライセンスは未指定です。必要に応じて `LICENSE` を追加してください。第三者データ・サービス（localgovjp、リンク先の各サイト）の利用条件は各提供元に従います。
+
+## フィードバック歓迎
+- URLの誤り報告
+- 未登録自治体の追加
+- UI改善
+- スクリプト改善
+
+Issue / PR 歓迎です。ぜひお力をお貸しください。
